@@ -1,5 +1,9 @@
 import React from 'react';
+import {NavLink, Route} from 'react-router-dom';
+import RecipeCard from './RecipeCard';
+
 import {RECIPEDATA} from '../../RECIPEDATA';
+
 
 const Recipes = () => {
     return ( 
@@ -9,34 +13,22 @@ const Recipes = () => {
                 <ul>
                     {RECIPEDATA.map(r => {
                         return (
+                            <NavLink key={r.title} to={'/recipes/'+r.id}>
                             <li>${r.cost} {r.title}</li>
+                            </NavLink>
                         )
                     })}
                 </ul>
             </div>
 
             <div className="card">
-                {RECIPEDATA.map(r => {
+                <Route path="/recipes/:id" render={props => {
+                    let thisId = Number(props.match.params.id)
+                    let thisRecipe = RECIPEDATA.filter(r=>r.id===thisId);
                     return (
-                        <div className="RecipeCard">
-                            <header>
-                                <p><em>{r.title}</em> ${r.cost} / {r.servings} servings = <small>${r.cost/r.servings} ea</small></p>
-                                <p>{r.prepTime}m prepTime</p>
-                                <p>{r.cookTime}m cookTime</p>
-                            </header>
-
-                            <div className="ingredients">
-                                <p><em>INGREDIENTS</em></p>
-                                {r.ingredients.map(i => {
-                                    if (i.amt < 0) i.amt = '';
-                                    return (
-                                        <p>{i.amt} {i.measure} {i.name}</p>
-                                    )
-                                })}
-                            </div>
-                        </div>
+                        <RecipeCard recipe={thisRecipe}/>
                     )
-                })}
+                }}/>
             </div>
         </div>
      );

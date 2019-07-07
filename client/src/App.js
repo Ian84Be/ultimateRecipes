@@ -16,7 +16,7 @@ function App() {
       <main>
         <Route exact path="/" component={Dashboard}/>
         <Route exact path="/shopping-list" component={ShoppingList}/>
-        <Route exact path="/recipes" component={Recipes}/>
+        <Route path="/recipes" component={Recipes}/>
       </main>
     </div>
   );

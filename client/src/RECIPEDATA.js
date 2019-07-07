@@ -54,5 +54,61 @@ export const RECIPEDATA = [
                 name: 'salt & pepper'
             },
         ]
+    },
+    {
+        id:1,
+        title:'Black Bean & Quinoa Burger',
+        cost: 20,
+        servings: 8,
+        prepTime: 20,
+        cookTime: 10,
+        howTo: 'instructions',
+        ingredients: [
+            {
+                amt: 1,
+                measure: 'cup',
+                name: 'red or multi-color quinoa'
+            },
+            {
+                amt: 1,
+                measure: '15oz can',
+                name: 'unseasoned black beans'
+            },
+            {
+                amt: 1,
+                measure: '8oz can',
+                name: 'unseasoned panko bread crumbs'
+            },
+            {
+                amt: 1,
+                measure: 'half',
+                name: 'vidalia sweet onion'
+            },
+            {
+                amt: 2,
+                measure: 'large',
+                name: 'carrots'
+            },
+            {
+                amt: 0.25,
+                measure: 'cup',
+                name: 'agave syrup'
+            },
+            {
+                amt: 2,
+                measure: 'tsp',
+                name: 'smoked paprika'
+            },
+            {
+                amt: 1,
+                measure: 'tbsp',
+                name: 'butter'
+            },
+            {
+                amt: -1,
+                measure: 'some',
+                name: 'salt & pepper'
+            },
+        ]
     }
 ];
