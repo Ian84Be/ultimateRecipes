@@ -1,0 +1,13 @@
+
+nav {
+    align-items: center;
+    border:1px solid red;
+    display: flex;
+    justify-content: space-between;
+    padding:8px;
+    width:100%;
+
+    a {
+        padding:0 4px;
+    }
+}
