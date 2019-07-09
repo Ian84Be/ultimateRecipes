@@ -17,12 +17,10 @@ async function add(recipe) {
 		.first();
 }
 
-async function update(recipe) {
-    cont [id] = await db('recipes').where({id}).update(req.body).returning('id');
-    return db('recipes')
-    .select('id', 'title')
-    .where({ id })
-    .first();
+async function update(id, payload) {
+    // const [id] = await db('recipes').where({id}).update(payload).returning('id');
+    await db('recipes').where({id}).update(payload);
+    return findById(id);
 }
 
 async function remove(id) {
@@ -30,8 +28,6 @@ async function remove(id) {
 }
 
 async function find() {
-    //TODO
-    //write a join to return the full ingredient_list
     return db('recipes').select('*');
 }
 
@@ -40,8 +36,17 @@ async function findBy(filter) {
 }
 
 async function findById(id) {
-	return db('recipes')
-		.select('id', 'title')
-		.where({ id })
-		.first();
+    return db('recipes').select('*').where({id}).first();
 }
+
+// async function findIngredients(id) {
+//     return db('recipes')
+//         .select(
+//             'il.amt',
+//             'il.measure',
+//             'i.name'
+//         )
+//         .from('ingredient_list as il')
+//         .where('il.recipe_id', '=', id)
+//         .join('ingredients as i', 'i.id', 'il.ingredient');
+// }

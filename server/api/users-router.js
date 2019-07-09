@@ -12,6 +12,30 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/:id', async (req, res) => {
+	try {
+		const thisUser = await Users.findById(req.params.id);
+		res.status(200).json(thisUser);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+router.put('/:id', async (req, res) => {
+	try {
+		const updated = await Users.update(req.params.id, req.body);
+		if (updated) {
+			res.status(200).json(updated);
+		} else {
+			res
+				.status(404)
+				.json({ message: 'The User with the specified ID does not exist.' });
+		}
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
 router.delete('/:id', async (req, res) => {
 	try {
 		const removed = await Users.remove(req.params.id);
