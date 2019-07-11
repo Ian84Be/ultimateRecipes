@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,15 +7,24 @@ import Login from './Components/Login/Login';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Recipes from './Components/Recipes/Recipes';
 import ShoppingList from './Components/ShoppingList/ShoppingList';
+import Signup from './Components/Signup/Signup';
 import './App.scss';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [myUsername, setMyUsername] = useState('');
-  // useEffect(() => {
-  //   let username = localStorage.getItem('username');
-  //   if (username !== '') setLoggedIn(username)
-  // }, [loggedIn]);
+
+
+  const userCreate = (e,username,password) => {
+    e.preventDefault();
+    axios.post('http://localhost:5000/api/auth/register', {username,password})
+        .then(res => {
+          setMyUsername(res.data.username);
+          setLoggedIn(true);
+          localStorage.setItem('token', res.data.token);
+        })
+        .catch(err => console.log(err))
+  }
 
   const userLogin = (e,username,password) => {
     e.preventDefault();
@@ -26,7 +35,7 @@ function App() {
           localStorage.setItem('token', res.data.token);
         })
         .catch(err => console.log(err))
-}
+  }
 
   return (
     <div className="App">
@@ -42,7 +51,12 @@ function App() {
           <Route path="/recipes" component={Recipes}/>
           </>
         )}
-        {!loggedIn && <Login userLogin={userLogin} />}
+        {!loggedIn && (
+          <>
+          <Route exact path="/" render={props => <Login {...props} userLogin={userLogin} />}/>
+          <Route exact path="/signup" render={props => <Signup {...props} userCreate={userCreate} />}/>
+          </>
+        )}
       </main>
     </div>
   );
