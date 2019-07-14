@@ -1,19 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
 
 import Nav from './Components/Nav/Nav';
-import Login from './Components/Login/Login';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Recipes from './Components/Recipes/Recipes';
 import ShoppingList from './Components/ShoppingList/ShoppingList';
-import Signup from './Components/Signup/Signup';
+import LandingPage from './Components/LandingPage/LandingPage';
 import './App.scss';
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [myUsername, setMyUsername] = useState('');
-
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setLoggedIn(true)
+      setMyUsername(localStorage.getItem('username'))
+    } 
+  },[])
 
   const userCreate = (e,username,password) => {
     e.preventDefault();
@@ -22,6 +27,7 @@ function App() {
           setMyUsername(res.data.username);
           setLoggedIn(true);
           localStorage.setItem('token', res.data.token);
+          localStorage.setItem('username', res.data.username);
         })
         .catch(err => console.log(err))
   }
@@ -33,6 +39,7 @@ function App() {
           setMyUsername(res.data.username);
           setLoggedIn(true);
           localStorage.setItem('token', res.data.token);
+          localStorage.setItem('username', res.data.username);
         })
         .catch(err => console.log(err))
   }
@@ -46,15 +53,14 @@ function App() {
       <main>
         {loggedIn && (
           <>
-          <Route exact path="/" component={Dashboard}/>
-          <Route exact path="/shopping-list" component={ShoppingList}/>
+          <Route exact path="/" render={props => <Dashboard {...props} username={myUsername} />} />
+          <Route exact path="/shopping-list" render={props => <ShoppingList {...props} username={myUsername}/>} />
           <Route path="/recipes" component={Recipes}/>
           </>
         )}
         {!loggedIn && (
           <>
-          <Route exact path="/" render={props => <Login {...props} userLogin={userLogin} />}/>
-          <Route exact path="/signup" render={props => <Signup {...props} userCreate={userCreate} />}/>
+          <Route path="/" render={props => <LandingPage {...props} userCreate={userCreate} userLogin={userLogin} />}/>
           </>
         )}
       </main>

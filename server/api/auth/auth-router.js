@@ -16,7 +16,6 @@ router.post('/register', async (req, res) => {
 	try {
         const newUser = await Users.add(user);
         const token = generateToken(user)
-        console.log(newUser);
 		res.status(201).json({
             id: newUser.id,
             username: newUser.username,
@@ -32,7 +31,7 @@ router.post('/login', async (req, res) => {
 	let { username, password } = req.body;
 
 	try {
-		const user = await Users.findBy({ username });
+		const user = await Users.findBy({ username:username });
 		if (user && bcrypt.compareSync(password, user.password)) {
 			const token = generateToken(user);
 			res.status(200).json({

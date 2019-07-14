@@ -1,18 +1,28 @@
 @import './Components/Nav/Nav.scss';
 
+* {
+  transition: 0.5s;
+}
+
 .App {
   align-items: center;
-  border:1px solid red;
+  // border:1px solid red;
   display:flex;
   flex-direction: column;
   margin:0 auto;
   width:100%;
 
+  a.active {
+    font-size:1.5rem;
+  }
+
   header {
     align-items: center;
-    border:1px solid black;
+    // border:1px solid black;
     display: flex;
     justify-content: space-between;
     width:100%;
   }
+
+
 }

@@ -21,6 +21,15 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
+router.get('/list/:username', async (req, res) => {
+	try {
+		const thisUser = await Users.findBy({username:req.params.username});
+		res.status(200).json(thisUser);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
 router.put('/:id', async (req, res) => {
 	try {
 		const updated = await Users.update(req.params.id, req.body);
