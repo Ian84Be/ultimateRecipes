@@ -20,14 +20,11 @@ const Nav = props => {
             <NavLink exact to="/">home</NavLink>
             <NavLink to="/shopping-list">shopping-list</NavLink>
             <NavLink to="/recipes">recipes</NavLink>
-            
-            <Button
-              content={props.username}
-              icon='user circle'
-              label={{ as: 'a', basic: true, content: 'Logout' }}
-              labelPosition='right'
-              onClick={logout}
-            />  
+
+            <Button animated onClick={logout}>
+              <Button.Content visible>{props.username}</Button.Content>
+              <Button.Content hidden>Logout</Button.Content>
+            </Button>
         </div>
       </nav>
     );

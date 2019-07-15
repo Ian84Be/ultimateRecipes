@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
+import {Tab} from 'semantic-ui-react';
 
 import Nav from './Components/Nav/Nav';
 import Dashboard from './Components/Dashboard/Dashboard';
+import AddRecipe from './Components/Recipes/AddRecipe';
 import Recipes from './Components/Recipes/Recipes';
 import ShoppingList from './Components/ShoppingList/ShoppingList';
 import LandingPage from './Components/LandingPage/LandingPage';
+import 'semantic-ui-css/semantic.min.css';
 import './App.scss';
-import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -46,6 +48,7 @@ function App() {
 
   return (
     <div className="App">
+      
       <header>
         {loggedIn ? (<Nav username={myUsername}/>) : ( <div>Login / Sign-up</div> )}
       </header>
@@ -56,6 +59,7 @@ function App() {
           <Route exact path="/" render={props => <Dashboard {...props} username={myUsername} />} />
           <Route exact path="/shopping-list" render={props => <ShoppingList {...props} username={myUsername}/>} />
           <Route path="/recipes" component={Recipes}/>
+          <Route path="/recipes/add" component={AddRecipe}/>
           </>
         )}
         {!loggedIn && (

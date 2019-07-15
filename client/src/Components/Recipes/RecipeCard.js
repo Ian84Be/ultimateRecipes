@@ -2,6 +2,7 @@ import React from 'react';
 
 const RecipeCard = (props) => {
     let r = props.recipe[0];
+    console.log(r);
     return ( 
         <div className="RecipeCard">
             <header>
@@ -12,12 +13,7 @@ const RecipeCard = (props) => {
 
             <div className="ingredients">
                 <p><em>INGREDIENTS</em></p>
-                {r.ingredients.map(i => {
-                    if (i.amt < 0) i.amt = '';
-                    return (
-                        <p key={i.name}>{i.amt} {i.measure} {i.name}</p>
-                    )
-                })}
+                {r.ingredients.split(',').map(i => <p key={i}>{i}</p>)}
             </div>
         </div>
      );
