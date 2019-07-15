@@ -3,8 +3,8 @@ import {NavLink} from 'react-router-dom'
 import {Button, Form, Input} from 'semantic-ui-react'
 
 const AddRecipe = (props) => {
-    const [myUsername, setMyUsername] = useState('');
-    const [myPassword, setMyPassword] = useState('');
+    // const [myUsername, setMyUsername] = useState('');
+    // const [myPassword, setMyPassword] = useState('');
 
     return ( 
         <Form onSubmit={(e) => e.preventDefault()} unstackable>
