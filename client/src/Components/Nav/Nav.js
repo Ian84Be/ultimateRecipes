@@ -6,7 +6,7 @@ const Nav = props => {
   const [activeItem, setActiveItem] = useState('Home');
 
   return ( 
-      <Menu fixed='top' inverted>
+      <Menu inverted stackable>
         <Container>
           <Menu.Item header>
             <Icon name='food' />
@@ -28,7 +28,6 @@ const Nav = props => {
               <Menu.Item as='div' name='logout' onClick={props.logout} />
             </NavLink>
           }
-          {/* <Button compact size='mini' inverted content='logout' onClick={props.logout}/> */}
         </Container>
       </Menu>
   );

@@ -7,6 +7,7 @@ import Nav from './Components/Nav/Nav';
 import Dashboard from './Components/Dashboard/Dashboard';
 import AddRecipe from './Components/Recipes/AddRecipe';
 import Recipes from './Components/Recipes/Recipes';
+import RecipeCard from './Components/Recipes/RecipeCard';
 import ShoppingList from './Components/ShoppingList/ShoppingList';
 import LandingPage from './Components/LandingPage/LandingPage';
 
@@ -49,7 +50,7 @@ function App() {
         username={myUsername}
       />
 
-      <Container style={{ marginTop: '4em' }}>
+      <Container>
         {loggedIn ?
             <Route exact path="/" render={props => 
               <Dashboard {...props} myList={myList} username={myUsername} />} 
@@ -62,15 +63,16 @@ function App() {
           <Route exact path="/Shopping-List" render={props => 
             <ShoppingList {...props} myList={myList} username={myUsername}/>} 
           />
-          <Route path="/Recipes" render={props => 
+          <Route exact path="/Recipes" render={props => 
             <Recipes {...props} recipeData={recipeData} />}
           />
         <Route path="/Recipes/add" component={AddRecipe}/>
+        <Container style={{marginTop:'2em'}}>
+            <Route path="/recipes/card/:id" render={ownProps =>
+                <RecipeCard {...ownProps} recipeData={recipeData}/>
+            }/>
+        </Container>
       </Container>
-
-      <main>
-
-      </main>
     </div>
   );
 
@@ -102,8 +104,9 @@ function App() {
   function getShopList() {
     axios.get(`/users/list/${myUsername}`)
     .then(res => {
-        let [shopping_list] = res.data
-        if (shopping_list.length>0) setMyList(shopping_list.split(','));
+      let list = res.data.shopping_list;
+      console.log(list);
+        if (list.length>0) setMyList(list.split(','));
     })
     .catch(err => console.log(err))
   }

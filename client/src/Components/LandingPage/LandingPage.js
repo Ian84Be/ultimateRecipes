@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {NavLink} from 'react-router-dom'
-import {Button, Form, Header, Icon, Input} from 'semantic-ui-react'
+// import {NavLink} from 'react-router-dom'
+import {Button, Form, Header, Icon, Input, Segment} from 'semantic-ui-react'
 
 const LandingPage = (props) => {
     const [myUsername, setMyUsername] = useState('');
@@ -12,7 +12,32 @@ const LandingPage = (props) => {
             <Icon name='food' circular />
             <Header.Content>ultimateRecipes</Header.Content>
         </Header>
-        <Form onSubmit={
+
+        <Segment placeholder>
+            <Form onSubmit={
+                    props.location.pathname === '/sign-up' ? 
+                    (e) => props.userCreate(e, myUsername, myPassword) :
+                    (e) => props.userLogin(e, myUsername, myPassword)
+                }>
+                <Form.Field 
+                    control={Input} 
+                    label="Username"
+                    onChange={(e) => setMyUsername(e.target.value)}
+                    required
+                />
+                <Form.Field 
+                    control={Input} 
+                    label="Password"
+                    onChange={(e) => setMyPassword(e.target.value)}
+                    required
+                />
+                <Button basic color='black' type='submit'>Login</Button>
+            </Form>
+        </Segment>
+
+
+
+        {/* <Form onSubmit={
             props.location.pathname === '/sign-up' ? 
             (e) => props.userCreate(e, myUsername, myPassword) :
             (e) => props.userLogin(e, myUsername, myPassword)
@@ -29,7 +54,7 @@ const LandingPage = (props) => {
                 onChange={(e) => setMyPassword(e.target.value)}
             />
             <Button type='submit'>Submit</Button>
-        </Form>
+        </Form> */}
         </>
     );
 }

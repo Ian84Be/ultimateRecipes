@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Icon} from 'semantic-ui-react';
+import {Card, Icon, List} from 'semantic-ui-react';
 
 const RecipeCard = (props) => {
     let thisId = Number(props.match.params.id)
@@ -7,31 +7,34 @@ const RecipeCard = (props) => {
     console.log(r);
 
     return ( 
-        <div className="RecipeCard">
+        <>
             {r && 
               <Card>
-                {/* <Image src='/images/avatar/large/matthew.png' wrapped ui={false} /> */}
                 <Card.Content>
-                    <Card.Header>{r.title}</Card.Header>
-                    <Card.Meta>
-                        <p>{r.servings} servings</p>
-                        <p>{r.prep_time}m prepTime</p>
-                        <p>{r.cook_time}m cookTime</p>
-                    </Card.Meta>
-                    <Card.Description>
-                        <em>INGREDIENTS</em>
-                        {r.ingredients.split(',').map(i => <p key={i}>{i}</p>)}
-                    </Card.Description>
+                    <Card.Header style={{fontSize:'2rem'}}>{r.title}</Card.Header>
+                    <Card.Meta>${r.cost} / {r.servings} servings</Card.Meta>
+                    <List>
+                        <List.Item icon='clock outline' content={`${r.prep_time}m prepTime`} />
+                        <List.Item icon='clock' content={`${r.cook_time}m cookTime`} />
+                    </List>
+                </Card.Content>
+                <Card.Content>
+                    <Card.Header>Ingredients</Card.Header>
+                    <List>
+                    {r.ingredients.split(',').map(i => {
+                        return (
+                            <List.Item icon='checkmark box' key={i} content={i} />
+                        )
+                    })}
+                    </List>
                 </Card.Content>
                 <Card.Content extra>
-                    <a href="/">
                     <Icon name='star' />
-                    22 Pins
-                    </a>
+                    5 Stars
                 </Card.Content>
               </Card>
             }
-        </div>
+        </>
      );
 }
  
