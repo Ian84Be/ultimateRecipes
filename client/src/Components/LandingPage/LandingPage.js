@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
 import {NavLink} from 'react-router-dom'
-import {Button, Form, Input} from 'semantic-ui-react'
+import {Button, Form, Header, Icon, Input} from 'semantic-ui-react'
 
 const LandingPage = (props) => {
     const [myUsername, setMyUsername] = useState('');
     const [myPassword, setMyPassword] = useState('');
 
     return ( 
-        
+        <>
+        <Header as='h2' icon textAlign='center'>
+            <Icon name='food' circular />
+            <Header.Content>ultimateRecipes</Header.Content>
+        </Header>
         <Form onSubmit={
             props.location.pathname === '/sign-up' ? 
             (e) => props.userCreate(e, myUsername, myPassword) :
@@ -26,6 +30,7 @@ const LandingPage = (props) => {
             />
             <Button type='submit'>Submit</Button>
         </Form>
+        </>
     );
 }
  

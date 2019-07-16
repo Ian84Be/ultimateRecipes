@@ -1,4 +1,9 @@
 .Recipes {
-    border:1px solid magenta;
-    
+    // border:1px solid magenta;
+}
+
+.AddRecipe {
+    .ui[class*="bottom pointing"].label, .ui[class*="pointing below"].label {
+        margin-bottom:0;
+    }
 }

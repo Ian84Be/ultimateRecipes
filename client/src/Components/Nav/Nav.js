@@ -1,26 +1,41 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NavLink} from 'react-router-dom';
-import {Button} from 'semantic-ui-react';
+import {Button, Container, Icon, Menu} from 'semantic-ui-react';
 
 const Nav = props => {
+  const [activeItem, setActiveItem] = useState('Home');
+
   return ( 
-    <nav>
-      <div className="left">
-          <div className="logo">ultimateRecipes</div>
-      </div>
-
-      <div className="right">
-          <NavLink exact to="/">home</NavLink>
-          {props.loggedin && <NavLink to="/shopping-list">shopping-list</NavLink>}
-          <NavLink to="/recipes">recipes</NavLink>
-
-          <Button animated onClick={props.logout}>
-            <Button.Content visible>{props.username}</Button.Content>
-            <Button.Content hidden>Logout</Button.Content>
-          </Button>
-      </div>
-    </nav>
+      <Menu fixed='top' inverted>
+        <Container>
+          <Menu.Item header>
+            <Icon name='food' />
+            ultimateRecipes
+          </Menu.Item>
+          <NavLink exact to="/">
+            <Menu.Item as='div' name='Home' active={activeItem === 'Home'} onClick={tabClick} />
+          </NavLink>
+          {props.loggedin && 
+            <NavLink to="/shopping-list">
+              <Menu.Item as='div' name='Shopping-List' active={activeItem === 'Shopping-List'} onClick={tabClick} />
+            </NavLink> 
+          }
+          <NavLink to="/recipes">
+            <Menu.Item as='div' name='Recipes' active={activeItem === 'Recipes'} onClick={tabClick} />
+          </NavLink>
+          {props.loggedin && 
+            <NavLink exact to="/">
+              <Menu.Item as='div' name='logout' onClick={props.logout} />
+            </NavLink>
+          }
+          {/* <Button compact size='mini' inverted content='logout' onClick={props.logout}/> */}
+        </Container>
+      </Menu>
   );
+
+  function tabClick(e, data) {
+    setActiveItem(data.name);
+  }
 }
  
 export default Nav;

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
-
+import {Container,Header,Icon} from 'semantic-ui-react';
 
 import Nav from './Components/Nav/Nav';
 import Dashboard from './Components/Dashboard/Dashboard';
@@ -9,8 +9,9 @@ import AddRecipe from './Components/Recipes/AddRecipe';
 import Recipes from './Components/Recipes/Recipes';
 import ShoppingList from './Components/ShoppingList/ShoppingList';
 import LandingPage from './Components/LandingPage/LandingPage';
+
 import 'semantic-ui-css/semantic.min.css';
-import './App.scss';
+// import './App.scss';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 axios.interceptors.request.use(
@@ -40,35 +41,35 @@ function App() {
       .catch(err => console.log(err)) 
   },[])
 
-  console.log(recipeData)
-
   return (
     <div className="App">
-      <header>
-        <Nav 
-          loggedin={loggedIn}
-          logout={logout} 
-          username={myUsername}
-        />
-      </header>
+      <Nav 
+        loggedin={loggedIn}
+        logout={logout} 
+        username={myUsername}
+      />
+
+      <Container style={{ marginTop: '4em' }}>
+        {loggedIn ?
+            <Route exact path="/" render={props => 
+              <Dashboard {...props} myList={myList} username={myUsername} />} 
+            /> :
+            <Route exact path="/" render={props => 
+              <LandingPage {...props} userCreate={userCreate} userLogin={userLogin}
+            />}/>
+          }
+          
+          <Route exact path="/Shopping-List" render={props => 
+            <ShoppingList {...props} myList={myList} username={myUsername}/>} 
+          />
+          <Route path="/Recipes" render={props => 
+            <Recipes {...props} recipeData={recipeData} />}
+          />
+        <Route path="/Recipes/add" component={AddRecipe}/>
+      </Container>
 
       <main>
-        {loggedIn ?
-          <Route exact path="/" render={props => 
-            <Dashboard {...props} myList={myList} username={myUsername} />} 
-          /> :
-          <Route exact path="/" render={props => 
-            <LandingPage {...props} userCreate={userCreate} userLogin={userLogin}
-          />}/>
-        }
-        
-        <Route exact path="/shopping-list" render={props => 
-          <ShoppingList {...props} myList={myList} username={myUsername}/>} 
-        />
-        <Route path="/recipes" render={props => 
-          <Recipes {...props} recipeData={recipeData} />}
-        />
-        <Route path="/recipes/add" component={AddRecipe}/>
+
       </main>
     </div>
   );
@@ -101,9 +102,8 @@ function App() {
   function getShopList() {
     axios.get(`/users/list/${myUsername}`)
     .then(res => {
-        console.log(res.data);
-        let shopList = res.data.shopping_list.split(',');
-        setMyList(shopList);
+        let [shopping_list] = res.data
+        if (shopping_list.length>0) setMyList(shopping_list.split(','));
     })
     .catch(err => console.log(err))
   }
