@@ -1,7 +1,6 @@
 import React from 'react';
-import {NavLink, Route} from 'react-router-dom';
-import {Button,Card, Container, List, Icon} from 'semantic-ui-react';
-import RecipeCard from './RecipeCard';
+import {NavLink} from 'react-router-dom';
+import {Button,Card, Icon} from 'semantic-ui-react';
 
 const Recipes = (props) => {
     return ( 
