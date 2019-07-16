@@ -1,25 +1,40 @@
 import React from 'react';
+import {Card, Icon, List} from 'semantic-ui-react';
 
 const RecipeCard = (props) => {
-    let r = props.recipe[0];
-    return ( 
-        <div className="RecipeCard">
-            <header>
-                <p><em>{r.title}</em> ${r.cost} / {r.servings} servings = <small>${r.cost/r.servings} ea</small></p>
-                <p>{r.prepTime}m prepTime</p>
-                <p>{r.cookTime}m cookTime</p>
-            </header>
+    let thisId = Number(props.match.params.id)
+    let r = props.recipeData.filter(r=>r.id===thisId)[0];
+    console.log(r);
 
-            <div className="ingredients">
-                <p><em>INGREDIENTS</em></p>
-                {r.ingredients.map(i => {
-                    if (i.amt < 0) i.amt = '';
-                    return (
-                        <p key={i.name}>{i.amt} {i.measure} {i.name}</p>
-                    )
-                })}
-            </div>
-        </div>
+    return ( 
+        <>
+            {r && 
+              <Card>
+                <Card.Content>
+                    <Card.Header style={{fontSize:'2rem'}}>{r.title}</Card.Header>
+                    <Card.Meta>${r.cost} / {r.servings} servings</Card.Meta>
+                    <List>
+                        <List.Item icon='clock outline' content={`${r.prep_time}m prepTime`} />
+                        <List.Item icon='clock' content={`${r.cook_time}m cookTime`} />
+                    </List>
+                </Card.Content>
+                <Card.Content>
+                    <Card.Header>Ingredients</Card.Header>
+                    <List>
+                    {r.ingredients.split(',').map(i => {
+                        return (
+                            <List.Item icon='checkmark box' key={i} content={i} />
+                        )
+                    })}
+                    </List>
+                </Card.Content>
+                <Card.Content extra>
+                    <Icon name='star' />
+                    5 Stars
+                </Card.Content>
+              </Card>
+            }
+        </>
      );
 }
  

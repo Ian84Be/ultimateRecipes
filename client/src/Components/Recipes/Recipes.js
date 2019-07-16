@@ -1,37 +1,31 @@
 import React from 'react';
-import {NavLink, Route} from 'react-router-dom';
-import RecipeCard from './RecipeCard';
+import {NavLink} from 'react-router-dom';
+import {Button,Card, Icon} from 'semantic-ui-react';
 
-import {RECIPEDATA} from '../../RECIPEDATA';
-
-
-const Recipes = () => {
+const Recipes = (props) => {
     return ( 
-        <div className="Recipes">
-            this is the Recipes component
-            <div className="list">
-                <ul>
-                    {RECIPEDATA.map(r => {
-                        return (
-                            <NavLink key={r.title} to={'/recipes/'+r.id}>
-                            <li>${r.cost} {r.title}</li>
-                            </NavLink>
-                        )
-                    })}
-                </ul>
-            </div>
-
-            <div className="card">
-                <Route path="/recipes/:id" render={props => {
-                    let thisId = Number(props.match.params.id)
-                    let thisRecipe = RECIPEDATA.filter(r=>r.id===thisId);
-                    return (
-                        <RecipeCard recipe={thisRecipe}/>
-                    )
-                }}/>
-            </div>
-        </div>
-     );
+        <Card.Group>
+        <NavLink exact to="/recipes/add">
+            <Button basic color='green' content='Add a New Recipe!'/>
+        </NavLink>
+            {props.recipeData.map(r => {
+                return (
+                    <NavLink key={r.title} to={'/recipes/card/'+r.id}>
+                    <Card>
+                        <Card.Content>
+                            <Card.Header>{r.title}</Card.Header>
+                            <Card.Meta>${r.cost} / {r.servings} servings</Card.Meta>
+                            <Card.Description>
+                                <Icon name='star'/>
+                                5 Stars
+                            </Card.Description>
+                        </Card.Content>
+                    </Card>
+                    </NavLink>
+                )
+            })}
+        </Card.Group>
+    );
 }
  
 export default Recipes;

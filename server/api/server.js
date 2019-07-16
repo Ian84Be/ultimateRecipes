@@ -14,7 +14,8 @@ server.use(cors());
 
 server.use('/api/auth', authRouter);
 server.use('/api/users', restricted, usersRouter);
-server.use('/api/recipes', restricted, recipesRouter);
+// server.use('/api/recipes', restricted, recipesRouter);
+server.use('/api/recipes', recipesRouter);
 
 server.get('/', (req, res) => {
 	res.send("*** realUltimateRecipes ***");
